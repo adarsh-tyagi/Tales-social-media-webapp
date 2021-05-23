@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="cmnt-container">
+
+{% if message %}
+<div style="display: flex; justify-content: center;">
+<p class="alert alert-danger">{{message}}</p>
+</div>
+{% endif %}
+
+<div class="login">
+<form method="POST">
+{% csrf_token %}
+
+<label for="comment">Comment</label>
+<Textarea class="form-control" id="comment" name="comment" placeholder="Write your comment..." rows="5" cols="60"></Textarea>
+<br>
+<button class="btn btn-primary" type="submit"><i class="fa fa-pencil"></i> Comment</button>
+<a class="btn btn-outline-success" href="/"><i class="fa fa-home"></i> Home</a>
+
+</form>
+</div>
+</div>
+
+{% endblock %}

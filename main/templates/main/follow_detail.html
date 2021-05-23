@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="follow-container">
+
+<div class="follow-list">
+    <h3 style="color: #00B19E;">Followers</h3>
+    {% if followers_count > 0 %}
+    <ul class="list-group">
+    {% for f in followers %}
+    <a class="list-group-item list-group-item-primary" style="font-family: Verdana, Geneva, Tahoma, sans-serif; text-decoration: none; color: black; font-weight: bold" href="/profile/{{f}}">{{f}}</a>   
+
+    {% endfor %}
+    </ul>
+    {% else %}
+    <ul class="list-group">
+    <p class="list-group-item list-group-item-danger">No one is following you.</p>
+    </ul>
+    {% endif %}
+</div>
+<div class="follow-list">
+    <h3 style="color: #00B19E;">Followings</h3>
+    {% if followings_count > 0 %}
+    <ul class="list-group">
+    {% for f in followings %}
+    <a class="list-group-item list-group-item-warning" style="font-family: Verdana, Geneva, Tahoma, sans-serif; text-decoration: none; color: black; font-weight: bold" href="/profile/{{f}}">{{f}}</a>
+    {% endfor %}
+
+    </ul>
+    {% else %}
+    <ul class="list-group">
+    <p class="list-group-item list-group-item-danger">You are not following anyone.</p>
+    </ul>
+    {% endif %}
+</div>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<div class="other-profile">
+
+<div class="other-profile-container">
+
+<p style="font-weight: bold; font-size: 1.5rem; font-family: Verdana, Geneva, Tahoma, sans-serif; color: #00B19E">{{user.username}}'s Profile</p>
+
+{% if user.profile.image.url %}
+<img style="width: 70%; border-radius: 50%" src="{{user.profile.image.url}}" alt="user image">
+{% else %}
+<img style="width: 70%; border-radius: 50%" src="/media/default.jpg" alt="image">
+{% endif %}
+
+<p style="margin: 0; font-weight: bold; font-size: 1.2rem">{{user.username}}</p>
+<p style="margin: 0; font-weight: bold; font-size: 1rem; color: #505050">{{user.first_name}} {{user.last_name}}</p>
+
+{% if user.profile.status %}
+<p style="font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 0.85rem; color: #027D79">{{user.profile.status}}</p>
+{% else %}
+<p style="font-weight: bold; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 0.85rem; color: #027D79">I am using Tales app.</p>
+{% endif %}
+
+{% if is_followed %}
+<div>
+<a class="btn btn-danger" href="/unfollow/{{user.username}}"><i class="fa fa-user-times"></i> Unfollow</a>
+<a class="btn btn-primary" href="/{{user.username}}/tales"><i class="fa fa-book"></i> {{user.username}}'s Tales</a>
+</div>
+{% else %}
+<a class="btn btn-success" href="/follow/{{user.username}}"><i class="fa fa-user"></i> Follow</a>
+{% endif %}
+<br>
+<a class="btn btn-outline-primary" href="/"><i class="fa fa-home"></i> Home</a>
+</div>
+
+</div>
+
+{% endblock %}

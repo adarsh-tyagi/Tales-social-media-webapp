@@ -1,0 +1,85 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="posts">
+
+{% if count > 0 %}
+{% for post in page_obj %}
+<div class="card eachpost">
+    <div class="card-body">
+    <p class="card-text">{{post.message}}</p>
+    <p class="card-subtitle text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem">{{post.date}}</p>
+    <a class="btn btn-outline-info btn-sm" href="/comments/{{post.id}}"><i class="fa fa-comments"></i> Comments</a>
+    <!-- <a class="btn btn-danger btn-sm" href="/post/{{post.id}}/delete"><i class="fa fa-trash"></i> Delete</a> -->
+
+    <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="fa fa-trash"></i> Delete</button>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deleting Tale</h5>
+                    
+                </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete it?</p>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times-circle"></i> Close</button>
+            <a class="btn btn-danger" href="/post/{{post.id}}/delete"><i class="fa fa-trash"></i> Delete</a>
+        </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+<div class="card eachpost">
+<div style="text-align: center;">
+    <img src="{% static 'main/empty.svg' %}" alt="empty-image" style="height: 80vh; border-radius: 50%">
+    <h1>No Tales yet!</h1>
+    <p>Why not you create one?</p>
+</div>
+</div>
+{% endif %}
+<br>
+
+<div>
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li class="page-item">
+<a class="page-link" href="?page=1"><i class="fa fa-fast-backward"></i> First</a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fa fa-step-backward"></i> Previous</a>
+</li>
+{% endif %}
+
+<li class="page-item active"><span class="page-link">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span></li>
+
+{% if page_obj.has_next %}
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.next_page_number}}">Next <i class="fa fa-step-forward"></i></a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last <i class="fa fa-fast-forward"></i></a>
+</li>
+{% endif %}
+</ul>
+</div>
+<a class="btn btn-outline-success" href="/"><i class="fa fa-home"></i> Home</a>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

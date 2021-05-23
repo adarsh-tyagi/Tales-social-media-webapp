@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="write">
+
+{% if message %}
+<div style="display: flex; justify-content: center;">
+  <p class="alert alert-danger">{{message}}</p>
+</div>
+{% endif %}
+
+<div class="write-container">
+<form method="POST">
+  {% csrf_token %}
+  <label style="font-weight: bold; color: #00B19E" for="message">Your Tale</label>
+  <textarea class="form-control"
+    id="message"
+    rows="10"
+    cols="75"
+    name="message"
+    placeholder="Write your tale..."
+    style="margin-bottom: 1rem;"
+  ></textarea>
+  <button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i> Submit</button>
+  
+</form>
+<br>
+<a class="btn btn-outline-primary" href="/"><i class="fa fa-arrow-circle-left"></i> Back</a>
+</div>
+
+</div>
+{% endblock %}

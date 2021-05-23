@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="search-user">
+
+<div class="usr">
+{% if name == "No such user found!" %}
+<p style="color: red; font-weight: bold; font-size: 3rem">{{name}}</p>
+<p>Please check the entered username.</p>
+{% else %}
+<a style="text-decoration: none; font-weight: bold; font-size: 3rem" href="/profile/{{name}}">{{name}}</a>
+<p>Click on name to see profile.</p>
+{% endif %}
+<a class="btn btn-success" href="/"><i class="fa fa-home"></i> Home</a>
+</div>
+
+</div>
+
+{% endblock %}

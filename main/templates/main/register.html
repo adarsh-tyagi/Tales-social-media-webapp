@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %} 
+
+{% block content %} 
+
+<div class="register-container">
+
+{% if message %}
+<div style="display: flex; justify-content: center; flex-direction: column">
+<p class="alert alert-danger">{{message}}</p>
+<p class="alert alert-warning">Probable reasons:
+<p class="alert alert-info" style="margin: 0;"><span>Password weak or similar to personal info.</span> <span>Username already taken</span></p>
+</p> 
+
+</div>
+{% endif %}
+
+<div class="login register">
+<form method="POST">
+{% csrf_token %}
+
+  <label for="username">Username</label>
+  <input class="form-control" type="text" name="username" id="username" required />
+  <small class="small-msg">*Username must be unique*</small>
+  <br>
+
+  <label for="first_name">First Name</label>
+  <input class="form-control" type="text" name="first_name" id="first_name" required />
+  <br>
+
+  <label for="last_name">Last Name</label>
+  <input class="form-control" type="text" name="last_name" id="last_name" required />
+  <br>
+
+  <label for="email">Email</label>
+  <input class="form-control" type="email" name="email" id="email" required />
+  <br>
+
+  <label for="password1">Password</label>
+  <input class="form-control" type="password" name="password1" id="password1" required />
+  <small class="small-msg">*Create strong password (8 or more alphanumeric characters)*</small>
+  <small class="small-msg">*Password can not contain personal info like username*</small>
+  <br>
+
+  <label for="password2">Confirm password</label>
+  <input class="form-control" type="password" name="password2" id="password2" required />
+  <small class="small-msg">*Confirm your password*</small><br>
+  
+  <br>
+
+  <button class="btn btn-danger" type="submit"><i class="fa fa-user-plus"></i> Sign Up</button>
+</form>
+<p>Already have account, <a href="/login" style="text-decoration: none; font-weight: bold">Login</a> here</p>
+</div>
+
+</div>
+{% endblock %}

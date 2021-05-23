@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %} 
+
+{% block content %} 
+
+<div class="login-container">
+
+{% if message %}
+<div style="display: flex; justify-content: center;">
+<p class="alert alert-danger">{{message}}</p>
+</div>
+{% endif %}
+
+<div class="login">
+<form method="POST">
+{% csrf_token %}
+  <label for="username">Username</label>
+  <input class="form-control" type="text" name="username" id="username" required />
+    <br>
+  
+  <label for="password">Password</label>
+  <input class="form-control" type="password" name="password" id="password" required />
+  <br>
+  <button class="btn btn-success" type="submit"><i class="fa fa-sign-in"></i> Login</button>
+</form>
+<p>Need an account, <a href="/register" style="text-decoration: none; font-weight: bold">Register</a> here</p>
+</div>
+
+</div>
+{% endblock %}

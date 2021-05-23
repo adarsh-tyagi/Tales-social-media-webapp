@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="comments">
+
+
+{% if user != post.user %}
+<div class="cmnt-btn">
+<a class="btn btn-warning" href="/comment/{{post_obj}}"><i class="fa fa-comment"></i> Write comment</a>
+</div>
+{% endif %}
+
+
+{% if count > 0 %}
+{% for comment in comments %}
+<div class="cmnt">
+<p>{{comment.comment}}</p>
+{% if user.username == comment.user.username %}
+<p style="font-weight: bold; margin: 0; padding: 0; font-size: 0.9rem; color: #808080">{{comment.user.username}}</p>
+{% else %}
+<p style="margin: 0; padding: 0; font-size: 0.9rem"><a href="/profile/{{comment.user}}" style="text-decoration: none; color: #00B19E; font-weight: bold">{{comment.user.username}}</a></p>
+{% endif %}
+<small style="font-size: 0.65rem; font-weight: bold; color: #505050"> {{comment.date}}</small>
+</div>
+{% endfor %}
+
+
+
+    {% else %}
+    <div class="no-cmnt">
+    <h3 style="margin: 1rem 0;">No comments yet!</h3>
+    <img src="{% static 'main/no-comments.svg' %}" alt="" style="width: 100%;">
+    
+    </div>
+    {% endif %}
+<a class="btn btn-outline-primary" href="/"><i class="fa fa-arrow-circle-left"></i> Back</a>
+
+</div>
+
+{% endblock %}

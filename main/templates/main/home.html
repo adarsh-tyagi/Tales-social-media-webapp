@@ -1,0 +1,91 @@
+{% extends 'main/base.html' %} 
+{% load static %}
+
+{% block content %}
+<div style="display: flex; justify-content: center;">
+{% if message %}
+<p class="alert alert-danger">{{message}}</p>
+{% endif %}
+</div>
+
+
+{% if user.is_authenticated %}
+<div style="display: flex; flex-direction: column; justify-content: space-around; align-items: center; margin: 0; background-color: #C6FFFB">
+<a style="width: 50%; margin: 5px 0; margin-top: 10px" class="btn btn-primary" href="/userpost"><i class="fa fa-eye"></i> View Your Tales</a>
+<a style="width: 50%; margin: 5px 0; margin-bottom: 10px" class="btn btn-dark" href="/write"><i class="fa fa-share-alt"></i> Share Your Tale</a>
+</div>
+<hr style="border: 5px solid #00B19E; border-radius: 5px; margin: 0">
+
+
+<div class="posts">
+
+{% if count > 0 %}
+{% for post in page_obj %}
+<div class="card eachpost">
+    <div class="card-body">
+    {% if user.username == post.user.username %}
+    <h5><img src="{{post.user.profile.image.url}}" alt="user photo" width="50px" height="50px" style="border-radius: 50%;"> {{post.user}}</h5>
+    {% else %}
+    <h5><a href="/profile/{{post.user}}" style="text-decoration: none; color: #00B19E"><img src="{{post.user.profile.image.url}}" alt="user photo"  width="50px" height="50px" style="border-radius: 50%;"> {{post.user}}</a></h5>
+    {% endif %}
+    <h6 class="card-subtitle text-muted" style="font-size: 0.7rem;">{{post.date}}</h6>
+    <p class="card-text" style="font-weight: bold; font-size: 1 rem">{{post.message}}</p>
+    <a class="btn rounded-pill btn-outline-danger btn-sm" href="/comments/{{post.id}}"><i class="fa fa-comments-o"></i> Comments</a>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+
+<div class="card eachpost">
+<div style="text-align: center;">
+    <img src="{% static 'main/empty.svg' %}" alt="empty-image" style="height: 80vh; border-radius: 50%">
+    <h1>No Tales yet!</h1>
+    <p>Why not you create one?</p>
+</div>
+</div>
+
+{% endif %}
+<br>
+
+<div>
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li class="page-item">
+<a class="page-link" href="?page=1"><i class="fa fa-fast-backward"></i> First</a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fa fa-step-backward"></i> Previous</a>
+</li>
+{% endif %}
+
+<li class="page-item active"><span class="page-link">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span></li>
+
+{% if page_obj.has_next %}
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.next_page_number}}">Next <i class="fa fa-step-forward"></i></a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last <i class="fa fa-fast-forward"></i></a>
+</li>
+{% endif %}
+</ul>
+</div>
+
+</div>
+
+
+
+{% else %}
+<div class="card" style="margin-top: 1rem; border: none;">
+<img class="card-img-top" src="{% static 'main/home_img.svg' %}" alt="" style="height: 75vh; background-color: #D4FDFA; border-radius: 50%;">
+<div class="card-body" style="text-align: center;">
+<h2 class="card-text" style="color: #00B19E">Share your tales with others. Create account and enjoy</h2>
+</div>
+<div style="display: flex; justify-content: space-around">
+    <a class="btn btn-success btn-lg" href="/login"><i class="fa fa-sign-in"></i> Login</a>
+    <a class="btn btn-danger btn-lg" href="/register"><i class="fa fa-user-plus"></i> Register</a>
+</div>
+</div>
+<br>
+{% endif %}
+{% endblock %}

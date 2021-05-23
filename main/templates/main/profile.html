@@ -1,0 +1,65 @@
+{% extends 'main/base.html' %} 
+{% load crispy_forms_tags %}
+
+{% block content %} 
+
+{% if message %}
+<div style="display: flex; justify-content: center;">
+<p class="alert alert-danger">{{message}}</p>
+</div>
+{% endif %} 
+
+<div class="profile-container">
+
+
+<img src="{{user.profile.image.url}}" alt="user photo">
+
+<div class="profile-info">
+<p>{{user.username}}</p>
+<p>{{user.first_name}} {{user.last_name}}</p>
+
+<p id="email-info">{{user.email}}</p>
+
+<div class="follow">
+<a href="/{{user.username}}/follow_detail" style="text-decoration: none; color: #00B19E; margin-right: 5px;">
+<p style="margin: 0;">Follower</p>
+<p style="font-weight: bold; margin: 0">{{followers_count}}</p>
+</a>
+  
+<a href="/{{user.username}}/follow_detail" style="text-decoration: none; color: #00B19E; margin-left: 5px">
+<p style="margin: 0;">Following</p>
+<p style="font-weight: bold; margin: 0">{{followings_count}}</p>
+</a>
+</div>
+</div>
+
+<div class="profile-form" style="width: 100%; margin-top: 1rem; align-items:center;">
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+  <fieldset>
+    <legend style="font-weight: bold; color:#00B19E ">Profile Info</legend>
+  
+  <div class="mb-3">
+  <label for="id_email">Email</label>
+  <input class="form-control" type="email" name="email" value="{{user.email}}" id="id_email">
+  </div>
+  <br>
+  
+  <div class="mb-3">
+  <label for="id_image">Change Picture</label>
+  <input class="form-control" type="file" name="image" id="id_image">
+  </div>
+
+  <div class="mb-3">
+  <label for="is_status">Status</label>
+  <textarea class="form-control" name="status" id="id_status">{{user.profile.status}}</textarea>
+  </div>
+
+  </fieldset>
+  
+  <button class="btn btn-info" type="submit"><i class="fa fa-wrench"></i> Update</button>
+</form>
+</div>
+
+</div>
+{% endblock %}

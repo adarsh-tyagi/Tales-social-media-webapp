@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="posts">
+{% if count > 0 %}
+{% for post in page_obj %}
+<div class="card eachpost">
+    <div class="card-body">
+    <p class="card-text">{{post.message}}</p>
+    <p class="card-subtitle text-muted" style="font-size: 0.8rem; margin-bottom: 0.5rem">{{post.date}}</p>
+    <a class="btn btn-sm btn-outline-primary" href="/comments/{{post.id}}"><i class="fa fa-comments"></i> Comments</a>
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<div class="card eachpost">
+<div style="text-align: center;">
+    <img src="{% static 'main/empty.svg' %}" alt="empty-image" style="height: 80vh; border-radius: 50%; width: 100%">
+    <h1 style="color: red;">User have no tales to share!</h1>
+</div>
+</div>
+{% endif %}
+<br>
+
+<div>
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li class="page-item">
+<a class="page-link" href="?page=1"><i class="fa fa-fast-backward"></i> First</a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fa fa-backward"></i> Previous</a>
+</li>
+{% endif %}
+
+<li class="page-item active"><span class="page-link">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span></li>
+
+{% if page_obj.has_next %}
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.next_page_number}}">Next <i class="fa fa-forward"></i></a>
+</li>
+<li class="page-item">
+<a class="page-link" href="?page={{page_obj.paginator.num_pages}}">Last <i class="fa fa-fast-forward"></i></a>
+</li>
+{% endif %}
+</ul>
+</div>
+<a class="btn btn-outline-success" href="/"><i class="fa fa-home"></i> Home</a>
+</div>
+{% endblock %}
