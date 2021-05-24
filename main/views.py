@@ -24,14 +24,17 @@ def home(request):
 def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            return redirect('main:login')
+        if request.POST['password1'] == request.POST['password2']:
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                first_name = form.cleaned_data.get('first_name')
+                last_name = form.cleaned_data.get('last_name')
+                return redirect('main:login')
+            else:
+                return render(request, 'main/register.html', {'form': form, 'message': 'Username already exists.'})
         else:
-            return render(request, 'main/register.html', {'form': form, 'message': 'Sign up not successful. Try again!'})
+            return render(request, 'main/register.html', {'form': form, 'message': 'Both passwords did not matched.'})
     else:
         form = UserRegisterForm()
     return render(request, 'main/register.html', {'form': form})
@@ -185,7 +188,7 @@ def other_tales(request, user_name):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context ={
-        'posts': posts,
+        'posts': posts, 
         'count': len(posts),
         'page_obj': page_obj
     }
@@ -194,7 +197,9 @@ def other_tales(request, user_name):
 @login_required
 def search_user(request, user_name):
     user = User.objects.filter(username=user_name)
-    if user:
+    if user_name == request.user.username:
+        return redirect("main:profile")
+    elif user:
         name = user_name
         return otherprofile(request, user_name)
     else:

@@ -42,7 +42,7 @@
 {% else %}
 <div class="card eachpost">
 <div style="text-align: center;">
-    <img src="{% static 'main/empty.svg' %}" alt="empty-image" style="height: 80vh; border-radius: 50%">
+    <img src="{% static 'main/empty.svg' %}" alt="empty-image" style="height: 80vh; border-radius: 50%; width: 100%">
     <h1>No Tales yet!</h1>
     <p>Why not you create one?</p>
 </div>
@@ -59,7 +59,7 @@
 <li class="page-item">
 <a class="page-link" href="?page={{page_obj.previous_page_number}}"><i class="fa fa-step-backward"></i> Previous</a>
 </li>
-{% endif %}
+{% endif %} 
 
 <li class="page-item active"><span class="page-link">{{page_obj.number}} of {{page_obj.paginator.num_pages}}</span></li>
 
